@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "Text::MeCab companion for Acmeist",
    "author" : [
       "Naoki Tomita <tomita@cpan.org>"
    ],

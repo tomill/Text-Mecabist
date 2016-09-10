@@ -63,15 +63,114 @@ __END__
 
 =head1 NAME
 
-Text::Mecabist - It's new $module
+Text::Mecabist - Text::MeCab companion for Acmeist
 
 =head1 SYNOPSIS
 
+    use utf8;
     use Text::Mecabist;
+
+    my $parser = Text::Mecabist->new();
+
+    my $doc = $parser->parse('庭に鶏', sub {
+        my $node = shift;
+        return if not $node->readable;
+        $node->text($node->reading .'!');
+    });
+
+    print $doc->join('text'); # => "ニワ!ニ!ニワトリ!"
 
 =head1 DESCRIPTION
 
-Text::Mecabist is ...
+Text::Mecabist is a sub project from my Japanese transforming Acme toys. 
+
+Although it is overhead exists than using L<Text::MeCab> directly,
+but helpful especially around to encode/decode with mecab encoding.
+
+=head1 METHODS
+
+=head2 Text::Mecabist->new()
+
+    my $parser = Text::Mecabist->new();
+
+Craete parser object. Arguments can take are optional and same as L<Text::MeCab>->new().
+
+    my $parser = Text::Mecabist->new({
+        node_format => '%m,%H',
+        unk_format  => '%m,%H',
+        bos_format  => '%m,%H',
+        eos_format  => '%m,%H',
+        userdic     => 'user.dic'),
+    });
+
+=head2 Text::Mecabist->encoding()
+
+    print Text::Mecabist->encoding->name; # => "utf8" or something
+
+This class method returns Encode::Encoding object.
+
+=head2 $parser->parse($text [, $cb ])
+
+Parses text by mecab, returns Text::Mecabist::Document object
+that contains HUGE list of Text::Mecabist::Node objects.
+
+$parser encodes $text by mecab encoding automatically.
+
+Optional $cb is called for all of those nodes.
+
+=head2 Text::Mecabist::Document METHODS
+
+=head3 $doc->nodes()
+
+Accessor. Arrayref of Text::Mecabist::Node-s.
+
+=head3 $doc->join($field)
+
+    $doc = $parser->parse('庭の鶏')
+    $text = $doc->join('reading'); # => "ニワノニワトリ"
+
+Return combined text by specific field. Same as
+
+    my $res = "";
+    for my $node (@{ $doc->nodes }) {
+        $res .= $node->$field;
+    }
+
+=head2 Text::Mecabist::Node METHODS
+
+=head3 from Text::MeCab::Node
+
+    $node->id;
+    $node->length;
+    $node->rlength;
+    $node->rcattr;
+    $node->lcattr;
+    $node->stat;
+    $node->isbest;
+    $node->alpha;
+    $node->beta;
+    $node->prob;
+    $node->wcost;
+    $node->cost;
+    $node->surface; # decoded
+    $node->feature; # decoded
+    $node->format;  # decoded
+
+=head3 traversal methods
+
+    $node->has_next; # 1 or 0
+    $node->next; # next Text::MeCab::Node or undef
+    $node->has_prev; # 1 or 0
+    $node->prev; # prev Text::MeCab::Node or undef
+
+=head3 helper methods
+
+    $node->readable; # 1 or 0
+    $node->is('名詞'); # 1 or 0
+
+=head1 AUTHOR
+
+Naoki Tomita E<lt>tomita@cpan.orgE<gt>
 
 =head1 LICENSE
 
@@ -80,8 +179,6 @@ Copyright (C) Naoki Tomita.
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
-=head1 AUTHOR
-
-Naoki Tomita E<lt>tomita@cpan.orgE<gt>
+=for stopwords mecab
 
 =cut

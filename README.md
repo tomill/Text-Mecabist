@@ -9,13 +9,12 @@ Text::Mecabist - Text::MeCab companion for Acmeist
 
     my $parser = Text::Mecabist->new();
 
-    my $doc = $parser->parse('庭に鶏', sub {
+    print $parser->parse('庭に鶏', sub {
         my $node = shift;
-        return if not $node->readable;
-        $node->text($node->reading .'!');
+        $node->text($node->reading .'!') if $node->readable;
     });
 
-    print $doc->join('text'); # => "ニワ!ニ!ニワトリ!"
+    # => "ニワ!ニ!ニワトリ!"
 
 # DESCRIPTION
 
@@ -60,6 +59,12 @@ Optional $cb is called for all of those nodes.
 ### $doc->nodes()
 
 Accessor. Arrayref of Text::Mecabist::Node-s.
+
+### $doc->stringify()
+
+Shortcut to $doc->join('text'). Document object is [overload](http://search.cpan.org/perldoc?overload)ing as a string.
+
+    print $doc;
 
 ### $doc->join($field)
 

@@ -22,6 +22,11 @@ has [qw/ pos pos1 pos2 pos3 inflection_type inflection_form lemma reading pronun
     is => 'ro'
 );
 
+# spliteed extra (up to 5 items)
+has [qw/ extra1 extra2 extra3 extra4 extra5 /] => (
+    is => 'ro'
+);
+
 # copied from surface
 has text => (
     is => 'rw',
@@ -58,6 +63,11 @@ sub BUILDARGS {
     @args{qw/ pos pos1 pos2 pos3 inflection_type inflection_form lemma reading pronunciation extra /}
         = split(/,/, $args{feature}, 10);
     
+    if ($args{extra}) {
+        @args{qw/ extra1 extra2 extra3 extra4 extra5 /}
+            = split(',', $args{extra});
+    }
+
     if (defined $node->surface) {
         $args{surface} = $parser->encoding->decode($node->surface);
     }

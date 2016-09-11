@@ -1,6 +1,12 @@
 package Text::Mecabist::Document;
 use strict;
 use warnings;
+
+use overload (
+    q{""} => 'stringify',
+    fallback => 1,
+);
+
 use Moo;
 
 has count => (
@@ -27,6 +33,11 @@ sub each {
         $cb->($node); 
         last if $node->last;
     }
+}
+
+sub stringify {
+    my ($self) = @_;
+    $self->join('text');
 }
 
 sub join {

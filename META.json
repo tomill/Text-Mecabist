@@ -45,6 +45,7 @@
             "Encode" : "0",
             "Moo" : "0",
             "Text::MeCab" : "0",
+            "overload" : "0",
             "perl" : "5.010001"
          }
       },

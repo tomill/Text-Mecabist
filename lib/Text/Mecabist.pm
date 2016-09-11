@@ -72,13 +72,12 @@ Text::Mecabist - Text::MeCab companion for Acmeist
 
     my $parser = Text::Mecabist->new();
 
-    my $doc = $parser->parse('庭に鶏', sub {
+    print $parser->parse('庭に鶏', sub {
         my $node = shift;
-        return if not $node->readable;
-        $node->text($node->reading .'!');
+        $node->text($node->reading .'!') if $node->readable;
     });
 
-    print $doc->join('text'); # => "ニワ!ニ!ニワトリ!"
+    # => "ニワ!ニ!ニワトリ!"
 
 =head1 DESCRIPTION
 
@@ -123,6 +122,12 @@ Optional $cb is called for all of those nodes.
 =head3 $doc->nodes()
 
 Accessor. Arrayref of Text::Mecabist::Node-s.
+
+=head3 $doc->stringify()
+
+Shortcut to $doc->join('text'). Document object is L<overload>ing as a string.
+
+    print $doc;
 
 =head3 $doc->join($field)
 
@@ -179,6 +184,6 @@ Copyright (C) Naoki Tomita.
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
-=for stopwords mecab
+=for stopwords mecab ing
 
 =cut

@@ -27,7 +27,7 @@ sub parse {
     my ($self, $text, $cb) = @_;
     my $doc = Text::Mecabist::Document->new;
     
-    $text = $self->encoding->encode($text);
+    $text = $self->encoding->encode($text // "");
     
     for my $part (split /(\s+)/, $text) {
         if ($part =~ /^\s+$/) {

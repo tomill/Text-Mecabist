@@ -5,10 +5,10 @@ use Test::More;
 
 use Text::Mecabist;
 
-my $m = Text::Mecabist->new();
-note('mecab internal encoding is:', $m->encoding->name);
+my $parser = Text::Mecabist->new();
+note('mecab internal encoding is:', $parser->encoding->name);
 
-my $doc = $m->parse('庭には二羽鶏がいる');
+my $doc = $parser->parse('庭には二羽鶏がいる');
 
 is($doc->count, 9);
 

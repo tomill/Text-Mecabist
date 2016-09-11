@@ -5,14 +5,14 @@ use Test::More;
 
 use Text::Mecabist;
 
-my $m = Text::Mecabist->new();
+my $parser = Text::Mecabist->new();
 
 my $text = q{
 こんにちは  こんにちは
 こんにちは　こ
 };
 
-my $doc = $m->parse($text);
+my $doc = $parser->parse($text);
 is($doc->join('text'), $text);
 
 done_testing();

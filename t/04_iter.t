@@ -5,9 +5,9 @@ use Test::More;
 
 use Text::Mecabist;
 
-my $m = Text::Mecabist->new();
+my $parser = Text::Mecabist->new();
 
-my $doc = $m->parse('こんにちは');
+my $doc = $parser->parse('こんにちは');
 is($doc->count, 2);
 ok(!$doc->nodes->[0]->prev);
 ok(!$doc->nodes->[0]->has_prev);

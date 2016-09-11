@@ -5,8 +5,8 @@ use Test::More;
 
 use Text::Mecabist;
 
-my $m = Text::Mecabist->new();
-my $doc = $m->parse('庭には二羽鶏がいる', sub {
+my $parser = Text::Mecabist->new();
+my $doc = $parser->parse('庭には二羽鶏がいる', sub {
     my $node = shift;
     return if not $node->readable;
     $node->text($node->reading);

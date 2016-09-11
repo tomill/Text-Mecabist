@@ -77,7 +77,7 @@ Text::Mecabist - Text::MeCab companion for Acmeist
         $node->text($node->reading .'!') if $node->readable;
     });
 
-    # => "ニワ!ニ!ニワトリ!"
+    # ニワ!ニ!ニワトリ!
 
 =head1 DESCRIPTION
 
@@ -99,14 +99,14 @@ Craete parser object. Arguments can take are optional and same as L<Text::MeCab>
         unk_format  => '%m,%H',
         bos_format  => '%m,%H',
         eos_format  => '%m,%H',
-        userdic     => 'user.dic'),
+        userdic     => 'user.dic',
     });
 
 =head2 Text::Mecabist->encoding()
 
     print Text::Mecabist->encoding->name; # => "utf8" or something
 
-This class method returns Encode::Encoding object.
+This class method returns L<Encode>::Encoding object.
 
 =head2 $parser->parse($text [, $cb ])
 
@@ -117,17 +117,21 @@ $parser encodes $text by mecab encoding automatically.
 
 Optional $cb is called for all of those nodes.
 
-=head2 Text::Mecabist::Document METHODS
+    $doc = $parser->parse('...', sub {
+        my $node = shift; # => is a Text::Mecabist::Node
+    });
 
-=head3 $doc->nodes()
-
-Accessor. Arrayref of Text::Mecabist::Node-s.
+=head2 Text::Mecabist::Document
 
 =head3 $doc->stringify()
 
 Shortcut to $doc->join('text'). Document object is L<overload>ing as a string.
 
-    print $doc;
+    print $doc; # boon
+
+=head3 $doc->nodes()
+
+Accessor. Arrayref of Text::Mecabist::Node-s.
 
 =head3 $doc->join($field)
 
@@ -141,7 +145,7 @@ Return combined text by specific field. Same as
         $res .= $node->$field;
     }
 
-=head2 Text::Mecabist::Node METHODS
+=head2 Text::Mecabist::Node
 
 =head3 from Text::MeCab::Node
 
@@ -161,17 +165,20 @@ Return combined text by specific field. Same as
     $node->feature; # decoded
     $node->format;  # decoded
 
-=head3 traversal methods
+=head3 traversal nodes 
 
     $node->has_next; # 1 or 0
     $node->next; # next Text::MeCab::Node or undef
     $node->has_prev; # 1 or 0
     $node->prev; # prev Text::MeCab::Node or undef
 
-=head3 helper methods
+=head3 helper
 
     $node->readable; # 1 or 0
     $node->is('名詞'); # 1 or 0
+    $node->text; # copy of $node->surface but RW.
+    $node->skip(0); # skip in join() if set 1
+    $node->last(0); # last in join() if set 1
 
 =head1 AUTHOR
 
@@ -184,6 +191,6 @@ Copyright (C) Naoki Tomita.
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
-=for stopwords mecab ing
+=for stopwords mecab ing acmeist
 
 =cut

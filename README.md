@@ -14,7 +14,7 @@ Text::Mecabist - Text::MeCab companion for Acmeist
         $node->text($node->reading .'!') if $node->readable;
     });
 
-    # => "ニワ!ニ!ニワトリ!"
+    # ニワ!ニ!ニワトリ!
 
 # DESCRIPTION
 
@@ -36,14 +36,14 @@ Craete parser object. Arguments can take are optional and same as [Text::MeCab](
         unk_format  => '%m,%H',
         bos_format  => '%m,%H',
         eos_format  => '%m,%H',
-        userdic     => 'user.dic'),
+        userdic     => 'user.dic',
     });
 
 ## Text::Mecabist->encoding()
 
     print Text::Mecabist->encoding->name; # => "utf8" or something
 
-This class method returns Encode::Encoding object.
+This class method returns [Encode](http://search.cpan.org/perldoc?Encode)::Encoding object.
 
 ## $parser->parse($text \[, $cb \])
 
@@ -54,17 +54,21 @@ $parser encodes $text by mecab encoding automatically.
 
 Optional $cb is called for all of those nodes.
 
-## Text::Mecabist::Document METHODS
+    $doc = $parser->parse('...', sub {
+        my $node = shift; # => is a Text::Mecabist::Node
+    });
 
-### $doc->nodes()
-
-Accessor. Arrayref of Text::Mecabist::Node-s.
+## Text::Mecabist::Document
 
 ### $doc->stringify()
 
 Shortcut to $doc->join('text'). Document object is [overload](http://search.cpan.org/perldoc?overload)ing as a string.
 
-    print $doc;
+    print $doc; # boon
+
+### $doc->nodes()
+
+Accessor. Arrayref of Text::Mecabist::Node-s.
 
 ### $doc->join($field)
 
@@ -78,7 +82,7 @@ Return combined text by specific field. Same as
         $res .= $node->$field;
     }
 
-## Text::Mecabist::Node METHODS
+## Text::Mecabist::Node
 
 ### from Text::MeCab::Node
 
@@ -98,17 +102,20 @@ Return combined text by specific field. Same as
     $node->feature; # decoded
     $node->format;  # decoded
 
-### traversal methods
+### traversal nodes 
 
     $node->has_next; # 1 or 0
     $node->next; # next Text::MeCab::Node or undef
     $node->has_prev; # 1 or 0
     $node->prev; # prev Text::MeCab::Node or undef
 
-### helper methods
+### helper
 
     $node->readable; # 1 or 0
     $node->is('名詞'); # 1 or 0
+    $node->text; # copy of $node->surface but RW.
+    $node->skip(0); # skip in join() if set 1
+    $node->last(0); # last in join() if set 1
 
 # AUTHOR
 

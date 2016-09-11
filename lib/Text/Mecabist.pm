@@ -2,7 +2,7 @@ package Text::Mecabist;
 use 5.010001;
 use strict;
 use warnings;
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 use Moo;
 use Encode;
@@ -165,7 +165,7 @@ Return combined text by specific field. Same as
     $node->feature; # decoded
     $node->format;  # decoded
 
-=head3 splitted feature
+=head3 divided feature
 
     $node->pos;  # 品詞
     $node->pos1; # 品詞細分類1

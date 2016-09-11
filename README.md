@@ -102,7 +102,7 @@ Return combined text by specific field. Same as
     $node->feature; # decoded
     $node->format;  # decoded
 
-### splitted feature
+### divided feature
 
     $node->pos;  # 品詞
     $node->pos1; # 品詞細分類1

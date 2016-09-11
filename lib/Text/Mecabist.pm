@@ -165,6 +165,24 @@ Return combined text by specific field. Same as
     $node->feature; # decoded
     $node->format;  # decoded
 
+=head3 splitted feature
+
+    $node->pos;  # 品詞
+    $node->pos1; # 品詞細分類1
+    $node->pos2; # 品詞細分類2
+    $node->pos3; # 品詞細分類3
+    $node->inflection_type; # 活用型
+    $node->inflection_form; # 活用形
+    $node->lemma;   # 原形
+    $node->reading; # 読み
+    $node->pronunciation; # 発音
+    $node->extra1;
+    $node->extra2;
+    $node->extra3;
+    $node->extra4;
+    $node->extra5;
+    $node->extra; # all of extra, with comma
+
 =head3 traversal nodes 
 
     $node->has_next; # 1 or 0

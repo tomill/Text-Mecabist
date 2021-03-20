@@ -106,7 +106,19 @@ Craete parser object. Arguments can take are optional and same as L<Text::MeCab>
 
     print Text::Mecabist->encoding->name; # => "utf8" or something
 
-This class method returns L<Encode>::Encoding object.
+This class method returns an L<Encode::Encoding> object
+whose encoding is set when L<Text::MeCab> is installed.
+(default is "euc-jp")
+
+=head3 INSTALLATION
+
+If the mecab dictionary in your environment is utf-8,
+set the C<PERL_TEXT_MECAB_ENCODING> env before
+installing Text::MeCab.
+
+    PERL_TEXT_MECAB_ENCODING=utf-8 cpanm --reinstall Text::MeCab
+
+L<https://metacpan.org/pod/Text::MeCab#INSTALLATION>
 
 =head2 $parser->parse($text [, $cb ])
 

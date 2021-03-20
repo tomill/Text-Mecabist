@@ -20,7 +20,7 @@ Text::Mecabist - Text::MeCab companion for Acmeist
 
 Text::Mecabist is a sub project from my Japanese transforming Acme toys. 
 
-Although it is overhead exists than using [Text::MeCab](http://search.cpan.org/perldoc?Text::MeCab) directly,
+Although it is overhead exists than using [Text::MeCab](https://metacpan.org/pod/Text%3A%3AMeCab) directly,
 but helpful especially around to encode/decode with mecab encoding.
 
 # METHODS
@@ -29,7 +29,7 @@ but helpful especially around to encode/decode with mecab encoding.
 
     my $parser = Text::Mecabist->new();
 
-Craete parser object. Arguments can take are optional and same as [Text::MeCab](http://search.cpan.org/perldoc?Text::MeCab)\->new().
+Craete parser object. Arguments can take are optional and same as [Text::MeCab](https://metacpan.org/pod/Text%3A%3AMeCab)->new().
 
     my $parser = Text::Mecabist->new({
         node_format => '%m,%H',
@@ -43,7 +43,19 @@ Craete parser object. Arguments can take are optional and same as [Text::MeCab](
 
     print Text::Mecabist->encoding->name; # => "utf8" or something
 
-This class method returns [Encode](http://search.cpan.org/perldoc?Encode)::Encoding object.
+This class method returns an [Encode::Encoding](https://metacpan.org/pod/Encode%3A%3AEncoding) object
+whose encoding is set when [Text::MeCab](https://metacpan.org/pod/Text%3A%3AMeCab) is installed.
+(default is "euc-jp")
+
+### INSTALLATION
+
+If the mecab dictionary in your environment is utf-8,
+set the `PERL_TEXT_MECAB_ENCODING` env before
+installing Text::MeCab.
+
+    PERL_TEXT_MECAB_ENCODING=utf-8 cpanm --reinstall Text::MeCab
+
+[https://metacpan.org/pod/Text::MeCab#INSTALLATION](https://metacpan.org/pod/Text::MeCab#INSTALLATION)
 
 ## $parser->parse($text \[, $cb \])
 
@@ -62,7 +74,7 @@ Optional $cb is called for all of those nodes.
 
 ### $doc->stringify()
 
-Shortcut to $doc->join('text'). Document object is [overload](http://search.cpan.org/perldoc?overload)ing as a string.
+Shortcut to $doc->join('text'). Document object is [overload](https://metacpan.org/pod/overload)ing as a string.
 
     print $doc; # boon
 
